@@ -2,17 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Square from './Square'
 
-const Rows = ({ rows, index, userLocation, board, move }) => (
+const Rows = ({ row, userRepresentation, foodRepresentation, move, ri }) => (
   <>
-    <div className="row board-row" style={{ height: `${500 / rows.length}px` }}>
-      {rows.map((column) => (
+    <div className="row board-row" style={{ height: `${500 / row.length}px` }}>
+      {row.map((column, ci) => (
         <Square
-          key={column}
+          key={column[ci]}
           column={column}
-          rows={rows}
-          index={index}
-          userLocation={userLocation}
-          board={board}
+          ci={ci}
+          ri={ri}
+          row={row}
+          foodRepresentation={foodRepresentation}
+          userRepresentation={userRepresentation}
           move={move}
         />
       ))}
@@ -21,13 +22,11 @@ const Rows = ({ rows, index, userLocation, board, move }) => (
 )
 
 Rows.propTypes = {
-  rows: PropTypes.array,
+  row: PropTypes.array,
   move: PropTypes.func,
-  board: PropTypes.array,
-
-  // number: PropTypes.number,
-  index: PropTypes.number,
-  userLocation: PropTypes.array,
+  ri: PropTypes.array,
+  userRepresentation: PropTypes.element,
+  foodRepresentation: PropTypes.element,
 }
 
 export default Rows

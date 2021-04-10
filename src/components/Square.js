@@ -1,34 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Square = ({ column, rows, index, userLocation, board, move }) => {
-  // const [] = React.useState()
+const Square = ({
+  column,
+  foodRepresentation,
+  userRepresentation,
+  move,
+  ci,
+  ri,
+}) => {
   // eslint-disable-next-line
 
-  const newPosition = { h: index, v: column }
-
+  /* eslint-disable  no-nested-ternary */
+  const logic =
+    column === 'U'
+      ? userRepresentation
+      : column === 'F'
+      ? foodRepresentation
+      : null
+  /* eslint-disable  no-nested-ternary */
   // const [newLocation, setNewLocation] = React.useState(userLocation)
   const handleClick = () => {
-    // eslint-disable-next-line
-    // console.log(
-    //   '===',
-    //   newPosition,
-    //   userLocation,
-    //   rows,
-    //   move, // eslint-disable-next-line
-    //   board[1].splice(1, 1),
-    //   board[1],
-    // )
+    move(ri, ci)
   }
-
-  // eslint-disable-next-line
-  const source = column._source
-  // console.log('ss', rows)
-  // const user = column
-  // console.log('User', column..)
-  //
-  // console.log(column)
-  // board[newLocation.h][newLocation.v] = move
 
   return (
     <>
@@ -37,18 +31,18 @@ const Square = ({ column, rows, index, userLocation, board, move }) => {
         aria-hidden="true"
         onClick={handleClick}
       >
-        {source ? column : null}
+        {logic}
       </div>
     </>
   )
 }
 Square.propTypes = {
   column: PropTypes.number,
-  rows: PropTypes.array,
-  index: PropTypes.number,
-  userLocation: PropTypes.object,
-  board: PropTypes.array,
-  move: PropTypes.element,
+  userRepresentation: PropTypes.element,
+  foodRepresentation: PropTypes.element,
+  move: PropTypes.func,
+  ci: PropTypes.number,
+  ri: PropTypes.number,
 }
 
 export default Square
