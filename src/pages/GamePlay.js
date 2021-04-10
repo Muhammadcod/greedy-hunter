@@ -3,20 +3,21 @@ import PropTypes from 'prop-types'
 import User from '../assets/head.svg'
 import Food from '../assets/food.svg'
 import getRandomLocation from '../helper/utils'
+import Rows from '../components/Rows'
 // import Rows from '../components/Rows'
 
 const GamePlay = (props) => {
+  const [board, setBoard] = React.useState([])
+  const [step, setStep] = React.useState(0)
   const { grid } = props
   const gameGrid = parseInt(grid, 10)
 
   const maximumMoves = (gameGrid * gameGrid) / 2
   const boardRow = Array.from(Array(gameGrid).keys())
   // eslint-disable-next-line
-  const [board, setBoard] = React.useState(
-    Array.from(Array(gameGrid)).map(() => [...boardRow]),
-  )
   const userRepresentation = <img src={User} alt="user" />
   const foodRepresentation = <img src={Food} alt="user" />
+  const boad = Array.from(Array(gameGrid)).map(() => [...boardRow])
   const userLocation = React.useRef(getRandomLocation(gameGrid))
   const foodLocations = React.useRef(
     Array.from(Array(gameGrid).keys()).reduce((generatedLocations) => {
@@ -39,55 +40,62 @@ const GamePlay = (props) => {
       return generatedLocations
     }, {}),
   )
-  console.log('=', foodLocations)
 
   React.useEffect(() => {
     // add user to scene
-    const lb = board
+    const lb = boad
 
     lb[userLocation.current.h][userLocation.current.v] = 'U'
+    console.log('user', lb, userLocation.current.h)
+
     // add food to scene
     const fooKeys = Object.keys(foodLocations.current)
     for (let i = 0; i < fooKeys.length; ) {
       const foodLocation = foodLocations.current[fooKeys[i]]
-      console.log('===', foodLocation)
 
       lb[foodLocation.h][foodLocation.v] = 'F'
       i += 1
     }
+
     setBoard(lb)
 
     return () => {}
-  }, [])
+  }, [grid])
+
+  React.useEffect(() => {}, [])
+
+  const move = (row, col) => {
+    // eslint-disable-next-line
+
+    const bb = board
+    const index = bb[userLocation.current.h].indexOf('U')
+    bb[userLocation.current.h].splice(userLocation.current.v, 1, index)
+    console.log('move', bb, userLocation.current)
+    userLocation.current.h = row
+    userLocation.current.v = col
+    bb[userLocation.current.h][userLocation.current.v] = 'U'
+    setStep((currentStep) => currentStep + 1)
+    return () => {}
+  }
 
   return (
     <>
       <div className="game-play">
         <div className="game--wrapper">
           <div className="container board-wrapper">
-            {board.map((row) => (
-              <div className="d-flex justify-content-center align-items-center w-100">
-                {row.map((column) => (
-                  <span
-                    className="d-inline-flex border justify-content-center align-items-center"
-                    style={{ height: '65px', width: '65px' }}
-                  >
-                    {
-                      // eslint-disable-next-line
-                      column === 'U'
-                        ? userRepresentation
-                        : column === 'F'
-                        ? foodRepresentation
-                        : column
-                    }
-                    {console.log(column, 'sdf')}
-                  </span>
-                ))}
-              </div>
+            {board.map((row, ri) => (
+              <Rows
+                row={row}
+                key={row[ri]}
+                move={move}
+                ri={ri}
+                userRepresentation={userRepresentation}
+                foodRepresentation={foodRepresentation}
+              />
             ))}
           </div>
           <div className="d-flex">
-            <span>maximum moves: {maximumMoves}</span>
+            <span>maximum moves: {Math.round(maximumMoves) - step}</span>
           </div>
         </div>
       </div>
