@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 // import HomeScreen from './pages/HomeScreen'
-// import GamePlay from './pages/GamePlay'
+import GamePlay from './pages/GamePlay'
 import Layout from './components/Layout'
 import Button from './components/Button'
 import GreedyHunter from './components/GreedyHunter'
-import GamePlay from './pages/GamePlay'
+// import GamePlay from './pages/GamePlay'
+// import Fix from './pages/Fix'
 function App() {
   const [value, setValue] = useState(0)
   const [grid, setGrid] = useState(0)

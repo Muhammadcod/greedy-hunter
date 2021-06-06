@@ -7,6 +7,8 @@ const Square = ({
   userRepresentation,
   move,
   ci,
+  time,
+  stop,
   ri,
 }) => {
   // eslint-disable-next-line
@@ -19,11 +21,12 @@ const Square = ({
       ? foodRepresentation
       : null
   /* eslint-disable  no-nested-ternary */
-  // const [newLocation, setNewLocation] = React.useState(userLocation)
   const handleClick = () => {
     move(ri, ci)
+    time()
+    stop()
   }
-
+  console.log(ci, column)
   return (
     <>
       <div
@@ -41,6 +44,8 @@ Square.propTypes = {
   userRepresentation: PropTypes.element,
   foodRepresentation: PropTypes.element,
   move: PropTypes.func,
+  time: PropTypes.func,
+  stop: PropTypes.func,
   ci: PropTypes.number,
   ri: PropTypes.number,
 }
