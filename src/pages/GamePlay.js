@@ -71,7 +71,6 @@ const GamePlay = (props) => {
     const lb = boad
 
     lb[userLocation.current.h][userLocation.current.v] = 'U'
-    console.log('user', lb, userLocation.current.h)
 
     // add food to scene
     const fooKeys = Object.keys(foodLocations.current)
@@ -114,19 +113,11 @@ const GamePlay = (props) => {
   }, [isActive, counter])
 
   const startTime = () => {
-    if (isActive === false) {
-      setIsActive(true)
-    } else {
-      console.log('true')
-    }
+    isActive === false ? setIsActive(true) : false
   }
 
   const stopTime = () => {
-    if (Math.round(maximumMoves) === step + 1) {
-      setIsActive(false)
-    } else {
-      console.log('true')
-    }
+    Math.round(maximumMoves) === step + 1 ? setIsActive(false) : false
   }
 
   const move = (row, col) => {

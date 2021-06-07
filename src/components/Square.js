@@ -26,7 +26,6 @@ const Square = ({
     time()
     stop()
   }
-  console.log(ci, column)
   return (
     <>
       <div
