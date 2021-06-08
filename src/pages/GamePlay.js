@@ -113,11 +113,15 @@ const GamePlay = (props) => {
   }, [isActive, counter])
 
   const startTime = () => {
-    isActive === false ? setIsActive(true) : false
+    if (isActive === false) {
+      setIsActive(true)
+    }
   }
 
   const stopTime = () => {
-    Math.round(maximumMoves) === step + 1 ? setIsActive(false) : false
+    if (Math.round(maximumMoves) === step + 1) {
+      setIsActive(false)
+    }
   }
 
   const move = (row, col) => {
